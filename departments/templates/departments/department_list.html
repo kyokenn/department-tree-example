@@ -1,0 +1,28 @@
+<ul class="list-unstyled ps-0">
+
+  {% for department in department.children %}
+  <li>
+    <div class="tree-toggle">
+      {% if department.children %}
+      <button data-bs-toggle="collapse" aria-expanded="{% if department.is_active %}true{% else %}false{% endif %}"
+              data-bs-target="#department-{{ department.id }}-collapse"
+              class="btn btn-toggle d-inline-flex align-items-center rounded border-0 {% if not department.is_active %} collapsed {% endif %}">
+      </button>
+      {% endif %}
+    </div>
+
+    <a href="/department/{{ department.id }}/"
+       class="link-body-emphasis d-inline-flex text-decoration-none rounded {% if department.is_active %} active {% endif %}">
+      {{ department.name }}
+    </a>
+
+    {% if department.children %}
+    <div class="collapse {% if department.is_active %} show {% endif %}" id="department-{{ department.id }}-collapse">
+      {% include "departments/department_list.html" %}
+    </div>
+    {% endif %}
+
+  </li>
+  {% endfor %}
+
+</ul>

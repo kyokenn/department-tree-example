@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>departments-tree-example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+      .btn-toggle {
+          color: var(--bs-emphasis-color);
+          background-color: transparent;
+      }
+      .btn-toggle:hover,
+      .btn-toggle:focus {
+          color: rgba(var(--bs-emphasis-color-rgb), .85);
+      }
+
+      .btn-toggle::before {
+          width: 1.25em;
+          content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+          transition: transform .35s ease;
+          transform-origin: .5em 50%;
+      }
+
+      [data-bs-theme="dark"] .btn-toggle::before {
+          content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%28255,255,255,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+      }
+
+      .btn-toggle[aria-expanded="true"] {
+          color: rgba(var(--bs-emphasis-color-rgb), .85);
+      }
+      .btn-toggle[aria-expanded="true"]::before {
+          transform: rotate(90deg);
+      }
+
+      .departments-tree .btn-toggle {
+          padding: 0;
+      }
+
+      .departments-tree li {
+          margin-left: 1.5rem;
+      }
+
+      .departments-tree .tree-toggle {
+          display: inline-block;
+          width: 1.5em;
+      }
+
+      .departments-tree a.active {
+          background-color: var(--bs-secondary-bg);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 p-3 departments-tree">
+          {% include "departments/department_list.html" %}
+        </div>
+
+        {% if id %}
+        <main class="col-md-9 p-3">
+          <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Middle Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Job Title</th>
+                  <th scope="col">Employment Date</th>
+                  <th scope="col">Salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for employee in employees %}
+                <tr>
+                  <td>{{ employee.first_name }} </td>
+                  <td>{{ employee.middle_name }} </td>
+                  <td>{{ employee.last_name }} </td>
+                  <td>{{ employee.job }} </td>
+                  <td>{{ employee.employment_date }} </td>
+                  <td>{{ employee.salary }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <nav aria-label="...">
+            <form class="pagination" method="get">
+              <div class="page-item {% if not previous %} disabled {% endif %}">
+                <a class="page-link" href="{{ previous|default:'#' }}">Previous</a>
+              </div>
+              <formfield class="page-item" aria-current="page__">
+                <input class="page-link" type="text" name="page" value="{{ page }}"/ >
+              </formfield>
+              <div class="page-item {% if not next %} disabled {% endif %}">
+                <a class="page-link" href="{{ next|default:'#' }}">Next</a>
+              </div>
+            </form>
+          </nav>
+
+        </main>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
